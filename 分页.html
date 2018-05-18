@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="Keywords" content="" />
+		<meta name="Description" content="" />
+		<title>分页</title>
+
+		<link rel="stylesheet" href="css/all.css" />
+		<link rel="stylesheet" href="css/paging.css" />
+		<style type="text/css">
+			.index-cont {
+				padding: 20px 10px;
+			}
+		</style>
+
+	</head>
+
+	<body class=" relative" data-spy="scroll" data-tagget="huating">
+
+		<section>
+
+			<div class="index-cont container-12">
+				<input type="text" class="txt"  value="美女"/>
+				<button type="button" id="btn">查询</button>
+				<br />
+				<!--公告列表-->
+				<div class="noticelist container-12">
+
+					<div class="noticelist-cont clearfix">
+
+						<div class="col-xs-12 col-padding">
+							<ul class="list-group">
+								<li class="list-group-item col-xs-12  ttl rd-no2 ">
+									<span class="pull-left">标题</span>
+									<span class="pull-right"> 发表时间</span>
+								</li>
+
+							</ul>
+						</div>
+
+					</div>
+
+					<!--内容列表-->
+					<div class="noticelist-cont clearfix">
+
+						<ul class="list-group noticelist-cont-2 clearfix">
+
+							<li class="list-group-item col-xs-12   rd-no2  ">
+								<a href="javascript:;" class="text-primary pull-left">花歌吉宏新上架花歌吉宏新上架花歌吉花歌吉宏新上架花歌吉宏新上架花歌吉花歌吉宏新上架花歌吉宏新上架花歌吉花歌吉宏新上架花歌吉宏新上架花歌吉花歌吉宏新上架花歌吉宏新上架花歌吉</a>
+								<span class="date pull-right "> 2017-08-02 12:45:23</span>
+							</li>
+							<li class="list-group-item col-xs-12   rd-no2  ">
+								<a href="javascript:;" class="text-primary pull-left">花歌吉宏新上架花歌吉宏新上架花歌吉花歌吉宏新上架花歌吉宏新上架花歌吉花歌吉宏新上架花歌吉宏新上架花歌吉花歌吉宏新上架花歌吉宏新上架花歌吉花歌吉宏新上架花歌吉宏新上架花歌吉</a>
+								<span class="date pull-right "> 2017-08-02 12:45:23</span>
+							</li>
+
+						</ul>
+
+					</div>
+
+					<!-- 分页-->
+					<div class="paging text-right">
+
+					</div>
+
+				</div>
+
+			</div>
+
+			</div>
+
+		</section>
+
+		<!--mustache模板-->
+		<script type="text/html" id="must">
+
+			<ul>
+				{{#must}}
+				<li class="list-group-item col-xs-12   rd-no2  ">
+					<a href="javascript:;" class="text-primary pull-left">{{content}}</a>
+					<span class="date pull-right ">{{date}}</span>
+				</li>
+				{{/must}}
+			</ul>
+
+		</script>
+
+		<!--js -->
+		<script src="js/jquery-1.11.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/paging.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/mustache.js" type="text/javascript" charset="utf-8"></script>
+
+		<script type="text/javascript">
+			// 分页
+			 paging.init({
+			 	data:{txt:$(".txt").val() }, // 查询数据
+				index: 1, //	当前页
+				//pageItem: 5, //  每页条数
+				//allItem: 100, //  总条数
+				showCount: 5, //  显示的页码数目
+				selector: ".paging", //分页父元素
+				isAnimation: true, //是否显示动画
+				isShowSkip: true, // 是否显示跳转页
+				//isShowCount:true,  // 是否显示总页数
+				//isShowAllItems:true,  // 是否显示总条目
+				prevText: "&lt;&lt;",
+				nextText: "&gt;&gt;",
+				//firstText:"第一页",
+				//lastText:"后一页",
+				//prevGroupText:"...",
+				//nextGroupText:"...",
+				//isShowNumber:true ,   //是否显示数字
+				//isShowPrevNext:true, // 是否显示上下页
+				//isShowFirstLast: false, // 是否显示第一页和后一页
+				//isShowPrevNextGroup:true, // 是否显示上下页组
+				callback: callback,
+			});
+
+			function callback(obj) {
+				//console.log(obj.data)
+				var id = obj.index; //当前页码
+				obj.pageItem = 5; //  每页条数
+				//obj.data        // 页面数据
+				$.get("./paging.json?id="+obj.index, obj.data,function(data) {
+
+						// 成功之后赋值
+						obj.allItem = 100; //  总条数
+						obj.render();
+
+						var data = data.map(function(item) {
+							item.content = obj.index + "页：" + item.content;
+							return item;
+
+						});
+
+						var html = Mustache.render($("#must").html(), {
+							must: data
+						});
+
+						$(".noticelist-cont-2 ").html(html);
+
+					});
+
+			}
+
+			//点击事件
+			$(document).on("paging_click", function(event, id) {
+				//id 当前点击的元素的页码	
+				//alert(id);
+
+			});
+			
+			$("#btn").click(function(){
+				
+				var obj=paging.getObj;
+				obj.data={txt:$(".txt").val() }
+				//obj.index=1;
+				obj.init();
+			});
+		</script>
+
+	</body>
+
+</html>
