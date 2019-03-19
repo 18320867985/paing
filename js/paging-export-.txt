@@ -1,0 +1,22 @@
+
+import paginger from "./paging-export.js";
+
+var paging = paginger($);
+  paging.init({
+	   index: 1, //	当前页
+        pageItem: 10, //  每页条数
+        allItem: 1, //  总条数
+        showCount: 5, //  显示的页码数目
+        isShowSkip: true, // 是否显示跳转页
+        isShowCount: true, // 是否显示总页数
+        isShowAllItems: true, // 是否显示总条目
+        selector: ".paging"
+  });
+
+//点击事件
+$(document).on("paging_click", function(event, id) {
+	//id 当前点击的元素的页码	
+	//alert(id);
+
+});
+		
