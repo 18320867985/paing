@@ -155,6 +155,18 @@
 
 			});
 			
+					//点击事件
+			// 		$(document).on("paging_click", function(event, id) {
+			// 			//id 当前点击的元素的页码	
+			// 		//	alert(id);
+			// 		});
+			 		
+			//类型切换点击事件
+// 				$(".news-banner-toggle ._item").on("click", function() {
+// 				type=$(this).attr("data-type");
+// 				$(this).trigger("pagingCallback");
+// 			});
+// 			
 			$("#btn").click(function(){
 				
 				var obj=paging.getObj;
@@ -162,6 +174,7 @@
 				//obj.index=1;
 				obj.init();
 			});
+			
 		</script>
 
 	</body>
