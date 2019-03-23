@@ -95,11 +95,16 @@
 							  	 <p>no data</p>
 							  {{/gl}}
 							  
-							  
+							   <!--显示html富文本内容-->
+							  <div>
+							  		{{{lastName}}}
+							  </div>
 							
 					 	</li>
 				 	{{/people}}
 				 </ul>
+				 
+				
 				 
 			</div>
 		</script>
